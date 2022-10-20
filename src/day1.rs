@@ -45,19 +45,34 @@
 use reqwest;
 
 
-fn iterate_body(res: reqwest::Response) {
-    let mut body = String::new();
+fn find_increasing(body: String) -> i32 {
+    let values: Vec<i32> = body.split("\n")
+        .map(|x| x.parse::<i32>().unwrap())
+        .collect();
 
-    while let Some(data) = res.chunk() {
-        body.push_str(data);
-    }
-
+    values
+        .iter()
+        .zip(values.iter().skip(1))
+        .map(|(a, b)| (b > a) as i32)
+        .sum()
 }
 
 
 
-fn main() {
+fn main() -> Result<i32, reqwest::Error> {
     let url = "https://adventofcode.com/2021/day/1/input";
-    let mut res = reqwest::get(url);
-    iterate_body(res);
+    let body = reqwest::blocking::get(url)?
+        .text()?;
+    let total = find_increasing(body);
+    Ok(total)
+}
+
+#[cfg(test)]
+#[test]
+fn run_sample() {
+    let test = String::from("199\n200\n208\n210\n200\n207\n240\n269\n260\n263");
+
+    let tot = find_increasing(test);
+
+    assert_eq!(tot, 7);
 }
