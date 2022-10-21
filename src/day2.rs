@@ -168,3 +168,9 @@ fn test_direction_parsing() {
         assert_eq!(&direction, expected);
     }
 }
+
+#[cfg(test)]
+#[test]
+fn test_amt_parsing() {
+    assert!(true);
+}
