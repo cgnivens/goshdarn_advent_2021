@@ -102,7 +102,7 @@ fn part_one(parsed: &Vec<i32>) -> i32 {
 
 
 fn part_two(parsed: &Vec<i32>) -> i32 {
-    // Need a
+    // Need a sliding window of three elements wide
     let a = parsed
         .iter()
         .zip(parsed.iter().skip(1))
