@@ -125,19 +125,25 @@ fn part_two(parsed: &Vec<i32>) -> i32 {
 
 
 
-pub fn main() -> Result<(i32, i32)> {
+pub fn main() -> Result<()> {
     let mut fh = File::open("data/day1.txt")?;
     let mut body = String::new();
 
     fh.read_to_string(&mut body)?;
+
     body = body.trim().to_string();
 
     let values = parse_to_int(body);
 
     let total_1 = part_one(&values);
+
+    println!("Part 1 solution: {:?}", total_1);
+
     let total_2 = part_two(&values);
 
-    Ok((total_1, total_2))
+    println!("Part 2 solution: {:?}", total_2);
+
+    Ok(())
 }
 
 
