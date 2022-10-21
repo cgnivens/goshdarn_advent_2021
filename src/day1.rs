@@ -42,27 +42,31 @@
 /// How many measurements are larger than the previous measurement?
 ///
 
-use reqwest;
+use std::fs::File;
+use std::io::{Result, Read};
 
 
 fn find_increasing(body: String) -> i32 {
-    let values: Vec<i32> = body.split("\n")
-        .map(|x| x.parse::<i32>().unwrap())
+
+    let parsed: Vec<i32> = body
+        .split("\n")
+        .map(|x| x.trim().parse::<i32>().unwrap())
         .collect();
 
-    values
+    parsed
         .iter()
-        .zip(values.iter().skip(1))
+        .zip(parsed.iter().skip(1))
         .map(|(a, b)| (b > a) as i32)
         .sum()
 }
 
 
 
-fn main() -> Result<i32, reqwest::Error> {
-    let url = "https://adventofcode.com/2021/day/1/input";
-    let body = reqwest::blocking::get(url)?
-        .text()?;
+pub fn main() -> Result<i32> {
+    let mut fh = File::open("data/day1.txt")?;
+    let mut body = String::new();
+    fh.read_to_string(&mut body)?;
+    body = body.trim().to_string();
     let total = find_increasing(body);
     Ok(total)
 }
