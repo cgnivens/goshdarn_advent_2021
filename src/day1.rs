@@ -123,9 +123,9 @@ pub fn main() -> Result<()> {
 
     fh.read_to_string(&mut body)?;
 
-    body = body.trim().to_string();
+    let payload = body.trim();
 
-    let values = parse_to_int(body);
+    let values = parse_to_int(payload);
 
     let total_1 = part_one(&values);
 
@@ -140,42 +140,37 @@ pub fn main() -> Result<()> {
 
 
 #[cfg(test)]
-#[test]
-fn test_int_conversion() {
-    // Make sure my integer converter works
-    let test = String::from("199\n200\n208\n210\n200\n207");
+mod tests {
+    use super::*;
 
-    let res = parse_to_int(test);
+    const INPUT_EXAMPLE: &str = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263";
 
-    assert_eq!(
-        res,
-        vec![199, 200, 208, 210, 200, 207]
-    );
-}
+    #[test]
+    fn test_int_conversion() {
+        // Make sure my integer converter works
+        let res = parse_to_int(INPUT_EXAMPLE);
 
-#[cfg(test)]
-#[test]
-fn test_part_one() {
-    let test = String::from(
-        "199\n200\n208\n210\n200\n207\n240\n269\n260\n263"
-    );
-    let res = parse_to_int(test);
+        assert_eq!(
+            res,
+            vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+        );
+    }
 
-    let tot = part_one(&res);
+    #[test]
+    fn test_part_one() {
+        let res = parse_to_int(INPUT_EXAMPLE);
 
-    assert_eq!(tot, 7);
-}
+        let tot = part_one(&res);
 
+        assert_eq!(tot, 7);
+    }
 
-#[cfg(test)]
-#[test]
-fn test_part_two() {
-    let test = String::from(
-        "199\n200\n208\n210\n200\n207\n240\n269\n260\n263"
-    );
-    let res = parse_to_int(test);
+    #[test]
+    fn test_part_two() {
+        let res = parse_to_int(INPUT_EXAMPLE);
 
-    let tot = part_two(&res);
+        let tot = part_two(&res);
 
-    assert_eq!(tot, 5);
+        assert_eq!(tot, 5);
+    }
 }
