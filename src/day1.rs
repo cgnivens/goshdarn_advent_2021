@@ -164,7 +164,9 @@ fn test_int_conversion() {
 #[cfg(test)]
 #[test]
 fn test_part_one() {
-    let test = String::from("199\n200\n208\n210\n200\n207\n240\n269\n260\n263");
+    let test = String::from(
+        "199\n200\n208\n210\n200\n207\n240\n269\n260\n263"
+    );
     let res = parse_to_int(test);
 
     let tot = part_one(&res);
@@ -176,7 +178,9 @@ fn test_part_one() {
 #[cfg(test)]
 #[test]
 fn test_part_two() {
-    let test = String::from("199\n200\n208\n210\n200\n207\n240\n269\n260\n263");
+    let test = String::from(
+        "199\n200\n208\n210\n200\n207\n240\n269\n260\n263"
+    );
     let res = parse_to_int(test);
 
     let tot = part_two(&res);
