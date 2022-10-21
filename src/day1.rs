@@ -75,51 +75,44 @@
 /// Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
 ///
 
-
+use itertools::Itertools;
 use std::fs::File;
 use std::io::{Result, Read};
 
 
-fn parse_to_int(body: String) -> Vec<i32> {
+fn parse_to_int(body: &str) -> Vec<i32> {
     // Parse the file once and collect into a vec
     body
-        .split("\n")
+        .split('\n')
         .map(|x| x.trim().parse::<i32>().unwrap())
         .collect()
 }
 
 
-fn part_one(parsed: &Vec<i32>) -> i32 {
+fn part_one(parsed: &[i32]) -> usize {
     // offset iterator to compare if parsed[i] < parsed[i+1]
     // sum all occurrences where this is true
     parsed
         .iter()
-        .zip(parsed.iter().skip(1))
-        .map(|(a, b)| (b > a) as i32)
-        .sum()
+        .tuple_windows()
+        .filter(|(a, b)| a < b)
+        .count()
 }
 
 
-fn part_two(parsed: &Vec<i32>) -> i32 {
+fn part_two(parsed: &[i32]) -> usize {
     // Need a sliding window of three elements wide
-    let a = parsed
+    // We don't need to make the whole window
+    // a[i, i+1, i+2, i+3, i+4]
+    // window1 a[i], a[i+1], a[i+2], a[i+3]
+    // window2 a[i+1], a[i+2], a[i+3], a[i+4]
+    // i + j + k + l > j + k + l + m
+    // i > m
+    parsed
         .iter()
-        .zip(parsed.iter().skip(1))
-        .zip(parsed.iter().skip(2))
-        .map(|((x, y), z)| x + y + z);
-
-    // I tried doing let b = a.skip(1);
-    // but the borrow checker wouldn't have it
-    let b = parsed
-        .iter()
-        .skip(1)
-        .zip(parsed.iter().skip(2))
-        .zip(parsed.iter().skip(3))
-        .map(|((x, y), z)| x + y + z);
-
-    a.zip(b)
-        .map(|(x, y)| (y > x) as i32)
-        .sum()
+        .tuple_windows()
+        .filter(|(a, _, _, d)| a < d )
+        .count()
 }
 
 
