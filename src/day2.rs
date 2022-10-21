@@ -99,7 +99,11 @@ pub fn main() -> io::Result<()> {
 
     let reader = BufReader::new(fh);
 
-    for line in reader.lines().map(|l| l.unwrap()).filter(|l| !l.trim().is_empty()) {
+    for line in reader
+        .lines()
+        .map(|l| l.unwrap())
+        .filter(|l| !l.trim().is_empty())
+    {
 
         let mut chunk = line.split_whitespace();
 
@@ -114,7 +118,6 @@ pub fn main() -> io::Result<()> {
         let d = Direction::from_str(
             dir.unwrap()
         );
-
 
         match d {
             Ok(Direction::Up) => sub.up(amt),
