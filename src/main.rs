@@ -12,4 +12,6 @@ fn main() {
 
     day2_2::main().unwrap();
     println!("Day 2 Part 2: pass");
+
+    day3::main().unwrap();
 }
