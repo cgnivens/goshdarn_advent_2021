@@ -28,6 +28,7 @@
 // 11001
 // 00010
 // 01010
+//
 // Considering only the first bit of each number, there are five 0 bits
 // and seven 1 bits. Since the most common bit is 1, the first bit of
 // the gamma rate is 1.
@@ -54,6 +55,7 @@ use itertools::Itertools;
 use std::io;
 use std::io::{BufRead, BufReader};
 use std::fs::File;
+use counter::Counter;
 
 
 pub fn main() -> io::Result<()> {
@@ -62,6 +64,8 @@ pub fn main() -> io::Result<()> {
     let reader = BufReader::new(fh);
 
     let mut lines = reader.lines();
+
+
     Ok(())
 }
 
